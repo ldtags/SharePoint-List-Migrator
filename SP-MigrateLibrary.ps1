@@ -441,6 +441,8 @@ function Copy-SPOList {
     .PARAMETER DestinationSite
         The name of the site that the document library being migrated
         will be migrated to.
+        If this site is a subsite, enter the relative path to the subsite
+        starting from the top-level site.
 
     .PARAMETER Tenant
         [Optional] The name of the tenant that the SharePoint site is
@@ -564,4 +566,4 @@ function Copy-SPOList {
     Write-Host "Succesfully copied $ListName from $SourceSite to $DestinationSite"
 }
 
-Copy-SPOList -SourceSite 'Admin' -ListName 'Code Repository' -DestinationSite 'Temp2' -ListType 'Document Library'
+Copy-SPOList -SourceSite 'CalTFManagement' -ListName 'Recruiting' -DestinationSite 'CalTFManagement/Leadership' -ListType 'Document Library'
