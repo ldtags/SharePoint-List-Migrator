@@ -361,6 +361,8 @@ function Copy-SPOLibraryItems {
         -Activity "Completed copying files from $($SourceLibrary.Title)" `
         -Completed
 
+    $SourceLibUrl = $SourceLibrary.RootFolder.ServerRelativeUrl
+
     try {
         Set-PnPContext -Context $DestCtx
     } catch {
@@ -379,15 +381,17 @@ function Copy-SPOLibraryItems {
 
     Write-Host "Copying metadata from $($SourceLibrary.Title) to $($DestinationLibrary.Title)"
 
+    $DestLibUrl = $DestinationLibrary.RootFolder.ServerRelativeUrl
+
     # copy metadata for all files
     $global:counter = 1
-    Set-PnPContext -Context $SrcCtx
     foreach ($ListItem in $ListItems) {
         Write-Progress `
             -PercentComplete (($global:counter / $ListItems.Count) * 100) `
             -Activity "Copying metadata from $($SourceUrl) to $($DestinationUrl)" `
             -Status "File $($global:counter) of $($ListItems.Count)"
 
+        Set-PnPContext -Context $SrcCtx
         $Metadata = @{
             "Title" = $ListItem.FieldValues.Title
             "Created" = $ListItem.FieldValues.Created.DateTime
@@ -396,11 +400,6 @@ function Copy-SPOLibraryItems {
             "Editor" = $ListItem.FieldValues.Editor.Email
         }
 
-        Set-PnPContext -Context $DestCtx
-        $DestLibUrl = $DestinationLibrary.RootFolder.ServerRelativeUrl
-
-        Set-PnPContext -Context $SrcCtx
-        $SourceLibUrl = $SourceLibrary.RootFolder.ServerRelativeUrl
         $DestRelativeUrl = $ListItem.FieldValues.FileLeafRef.Replace($SourceLibUrl, $DestLibUrl)
 
         Set-PnPContext -Context $DestCtx
