@@ -472,7 +472,7 @@ function Copy-SPOList {
 
     $AdminUrl = "https://$Tenant-admin.sharepoint.com"
     try {
-        Connect-PnPOnline -Url $AdminUrl -Interactive
+        Connect-SharePoint -Url $AdminUrl
     } catch {
         Write-Error "Could not establish an admin-level connection: $($_.Exception.Message)"
         return
@@ -480,7 +480,7 @@ function Copy-SPOList {
 
     $SourceUrl = "https://$Tenant.sharepoint.com/sites/$SourceSite"
     try {
-        Connect-PnPOnline -Url $SourceUrl -Interactive
+        Connect-SharePoint -Url $SourceUrl
     } catch {
         Write-Error "Could not connect to $($SourceUrl): $($_.Exception.Message)"
         return
@@ -488,7 +488,7 @@ function Copy-SPOList {
 
     $DestinationUrl = "https://$Tenant.sharepoint.com/sites/$DestinationSite"
     try {
-        Connect-PnPOnline -Url $DestinationUrl -Interactive   
+        Connect-SharePoint -Url $DestinationUrl 
     } catch {
         Write-Error "Could not connect to $($DestinationUrl): $($_.Exception.Message)"
         return
@@ -526,7 +526,7 @@ function Copy-SPOList {
     }
 
     try {
-        Connect-PnPOnline -Url $SourceUrl -Interactive
+        Connect-SharePoint -Url $SourceUrl
     } catch {
         Write-Error "Could not connect to $($SourceUrl): $($_.Exception.Message)"
         return
